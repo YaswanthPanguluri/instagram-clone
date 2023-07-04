@@ -1,7 +1,25 @@
+import React, { useState, useEffect } from "react";
 import Post from "./Post";
 import "./App.css";
+//import  db  from "./firebase";
+import { db } from './firebase';
+
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
+//Explanation
+//The useEffect Hook is a built-in hook in React that allows you to perform side effects in functional components. It takes two arguments: a callback function and an optional dependency array.
+//In this example, the useEffect Hook is used to set up a listener on a Firestore collection called "posts". Whenever there is a change in the collection, the callback function (snapshot) => { setPosts(snapshot.docs.map((doc) => doc.data())); } is executed.
+//The callback function receives a snapshot object that represents the current state of the collection. The snapshot.docs property contains an array of document snapshots, and the map function is used to extract the data from each document using doc.data(). The resulting array of data is then used to update the state variable posts using the setPosts function.
+//The empty dependency array [] passed as the second argument to useEffect ensures that the effect is only run once, when the component is mounted. If any dependencies were specified in the array, the effect would be re-run whenever any of those dependencies change.
+ 
+useEffect(() => {
+    db.collection("posts").onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(doc => doc.data()));
+    });
+  }, []);
+
   return (
     <div className="App">
       <div className="app__header">
@@ -12,18 +30,19 @@ function App() {
         />
       </div>
       <h1>Hai yaswanth</h1>
+      {posts.map((post) => (
+        <Post
+          username={post.username}
+          caption={post.caption}
+          imageurl={post.imageurl}
+          profile_dp={post.profile_dp}
+        />
+      ))}
       <Post
-        profile_dp="https://avatars.githubusercontent.com/u/72020268?v=4"
-        imageurl="https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg"
-        username="yaswanth_kakatiya"
-        caption="Nature ♥"
-      />
-
-      <Post
-        profile_dp="https://media.licdn.com/dms/image/D5603AQFfoeuCY_vpdQ/profile-displayphoto-shrink_400_400/0/1684278627984?e=1693440000&v=beta&t=mJcm2z5c3Qfu1NEJg8BpMKejjsiXTyq3qGnsYfE1IWA"
-        imageurl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQml5ZS9sfGYP_QnjXIyQdl_PcuCysZEJ9-Gg&usqp=CAU"
-        username="themurahari"
-        caption="My new car"
+        profile_dp="https://media.licdn.com/dms/image/D5603AQFKqfOfmWbQ5g/profile-displayphoto-shrink_800_800/0/1681255902337?e=2147483647&v=beta&t=FptGMLh53LZiTzj6hA8zvELeIhgrbgsQHM_BvuStPAk"
+        imageurl="https://d2j6dbq0eux0bg.cloudfront.net/images/36125377/2882798229.jpg"
+        username="Shiva_mandadi"
+        caption="cheers!!"
       />
 
       <Post

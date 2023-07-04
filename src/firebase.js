@@ -1,22 +1,21 @@
-//import firebase from "firebase";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore/lite";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+const firebaseConfig = {
+  apiKey: "AIzaSyB74j_BZFcwsRrkKWWwKUj-ocZUzNVURLU",
+  authDomain: "insta-clone-react-55821.firebaseapp.com",
+  projectId: "insta-clone-react-55821",
+  storageBucket: "insta-clone-react-55821.appspot.com",
+  messagingSenderId: "1008435657323",
+  appId: "1:1008435657323:web:7206eba1909abecf938f2e",
+  measurementId: "G-GYH6GBH1C6",
+};
 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
 
-const firebaseApp = firebase.initializeApp({
-    apiKey: "AIzaSyComW_QsRhj8muSmdb8E6XKsmjecKFQtxo",
-    authDomain: "instagram-clone-67bee.firebaseapp.com",
-    projectId: "instagram-clone-67bee",
-    storageBucket: "instagram-clone-67bee.appspot.com",
-    messagingSenderId: "307407012428",
-    appId: "1:307407012428:web:41fa02ebc3f941471d6ae9",
-    measurementId: "G-D50M337CCX"
-});
-const db  = firebaseApp.firestore();
-const auth = firebase.auth();
-const storage = firebase.storage()
-
-
-export {db,auth,storage};
+export { db, auth, storage };
